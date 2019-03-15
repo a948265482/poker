@@ -8,15 +8,15 @@ import org.junit.Test;
 /**
  * Unit test for simple App.
  */
-public class AppTest {
+public class PokerTest {
 	
 	@Test
 	public void canCreateCard() {
 
 		Card card = new Card("5C");
 
-		assertEquals(card.rank, Rank.FIVE);
-		assertEquals(card.suit, Suit.C);
+		assertEquals(Rank.FIVE, card.rank);
+		assertEquals(Suit.C, card.suit);
 
 	}
 
