@@ -1,6 +1,8 @@
 package org.training.poker;
 
-public class Card {
+import java.util.*;
+
+public class Card implements Comparable<Card>{
 	private Rank rank;
 	private Suit suit;
 
@@ -15,7 +17,13 @@ public class Card {
 	
 	public Suit getSuit() {
 		return this.suit;
-	}	
+	}
+
+	public int compareTo(Card card) {
+		return this.rank.compareTo(card.rank);
+	}
+	
+	
 	
 
 }

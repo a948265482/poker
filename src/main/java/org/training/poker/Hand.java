@@ -16,6 +16,11 @@ public class Hand {
 		return this.cards;
 	}
 	
+	public List<Card> sortCards(){
+		Collections.sort(this.cards);
+		return this.cards;
+	}
+	
 	public Ranking getRanking(List<Card> cards) {
 		return null;
 	}

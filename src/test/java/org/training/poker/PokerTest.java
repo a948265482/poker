@@ -35,5 +35,23 @@ public class PokerTest {
 		assertTrue(cards.containsAll(actual.getCards()));
 
 	}
+	
+	
+	@Test
+	public void canSortCards() {
+
+		Card card1 = new Card("5C");
+		Card card2 = new Card("3D");
+		Card card3 = new Card("7S");
+		Card card4 = new Card("8D");
+		Card card5 = new Card("9H");
+		
+		Hand actual = new Hand(Arrays.asList(card1, card2, card4, card5, card3));
+		List<Card> cards = Arrays.asList(card2, card1, card3, card4, card5);
+
+		assertEquals(cards, actual.sortCards());
+
+	}
+
 
 }
