@@ -1,8 +1,8 @@
 package org.training.poker;
 
 public class Card {
-	Rank rank;
-	Suit suit;
+	private Rank rank;
+	private Suit suit;
 
 	private Card(String face) {
 		rank = Rank.getRank(face.charAt(0));
