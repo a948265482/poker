@@ -15,8 +15,8 @@ public class PokerTest {
 
 		Card card = new Card("5C");
 
-		assertEquals(Rank.FIVE, card.rank);
-		assertEquals(Suit.C, card.suit);
+		assertEquals(Rank.FIVE, card.getRank());
+		assertEquals(Suit.C, card.getSuit());
 
 	}
 
