@@ -12,8 +12,10 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.release>11</maven.compiler.release> 
-   <junit.jupiter.version>5.4.0</junit.jupiter.version>
+<!--     <maven.compiler.release>11</maven.compiler.release>  -->
+        <maven.compiler.source>11</maven.compiler.source>
+    	<maven.compiler.target>11</maven.compiler.target>
+   		<junit.jupiter.version>5.4.0</junit.jupiter.version>
  </properties>
 
   <dependencies>
@@ -44,5 +46,17 @@
 		</dependency>
 
   </dependencies>
-
+  
+  
+  <build>
+  	<plugins>
+  	    <!-- BECAUSE OF COMPILATION ERROR: "Source option 5 is no longer supported. Use 6 or later." --> 
+  		<plugin>
+  		 <groupId>org.apache.maven.plugins</groupId>
+  		 <artifactId>maven-compiler-plugin</artifactId>
+  		 <version>3.8.0</version>
+  		</plugin>  	
+  	</plugins>
+  </build>
+  
 </project>
