@@ -1,14 +1,13 @@
 package org.training.poker;
 
 import java.util.*;
+import java.util.Map.Entry;
 
 public class Hand {
-	private Ranking ranking;
 	private List<Card> cards;
 
 	Hand(List<Card> cards) {
 		this.cards = cards;
-		this.ranking = getRanking();
 	}
 
 	public List<Card> getCards() {
@@ -18,6 +17,69 @@ public class Hand {
 	public List<Card> sortCards() {
 		Collections.sort(this.cards);
 		return this.cards;
+	}
+
+	/**
+	 * 
+	 * @param hand1
+	 * @param hand2
+	 * @return int, if positive, hand1 wins, if negative, hand2 wins, if 0, it's a
+	 *         tie
+	 */
+	public int compareHands(Hand hand1, Hand hand2) {
+		if (hand1.getRanking() != hand2.getRanking()) {
+			return hand1.getRanking().compareTo(hand2.getRanking());
+		} else {
+			if (hand1.getRanking() == Ranking.ROYALFLUSH) {
+				return 0;
+			} else if ((hand1.getRanking() == Ranking.STRAIGHTFLUSH) || (hand1.getRanking() == Ranking.STRAIGHT)) {
+				return hand1.sortCards().get(4).getRank().compareTo(hand2.sortCards().get(4).getRank());
+			} else if (hand1.getRanking() == Ranking.FOUROFAKIND) {
+				Rank rankOfFour1 = hand1.frequencyToRank().get(4).get(0);
+				Rank rankOfFour2 = hand2.frequencyToRank().get(4).get(0);
+
+				return rankOfFour1.compareTo(rankOfFour2);
+
+			} else if ((hand1.getRanking() == Ranking.FULLHOUSE) || (hand1.getRanking() == Ranking.THREEOFAKIND)) {
+				Rank rankOfThree1 = hand1.frequencyToRank().get(3).get(0);
+				Rank rankOfThree2 = hand2.frequencyToRank().get(3).get(0);
+
+				return rankOfThree1.compareTo(rankOfThree2);
+
+			} else if (hand1.getRanking() == Ranking.TWOPAIR) {
+				Rank rankOfFirstPair1 = hand1.frequencyToRank().get(2).get(0);
+				Rank rankOfFirstPair2 = hand2.frequencyToRank().get(2).get(0);
+
+				Rank rankOfSecondPair1 = hand1.frequencyToRank().get(2).get(1);
+				Rank rankOfSecondPair2 = hand2.frequencyToRank().get(2).get(1);
+
+				if (rankOfSecondPair1 == rankOfSecondPair2) {
+					return rankOfFirstPair1.compareTo(rankOfFirstPair2);
+				}
+
+				return rankOfSecondPair1.compareTo(rankOfSecondPair2);
+
+			} else if (hand1.getRanking() == Ranking.PAIR) {
+				Rank rankOfPair1 = hand1.frequencyToRank().get(2).get(0);
+				Rank rankOfPair2 = hand2.frequencyToRank().get(2).get(0);
+
+				if (rankOfPair1 != rankOfPair2) {
+					return rankOfPair1.compareTo(rankOfPair2);
+				}
+				return hand1.frequencyToRank().get(1).get(2).compareTo(hand2.frequencyToRank().get(1).get(2));
+
+			} else if (hand1.getRanking() == Ranking.HIGHCARD || hand1.getRanking() == Ranking.FLUSH) {
+				for (int i = 4; i > 0; i--) {
+					if (hand1.sortCards().get(i) != hand2.sortCards().get(i)) {
+						return hand1.sortCards().get(i).compareTo(hand2.sortCards().get(i));
+					}
+					return 0;
+				}
+			}
+
+		}
+
+		return 0;
 	}
 
 	public Ranking getRanking() {
@@ -68,6 +130,25 @@ public class Hand {
 			}
 		}
 		return rankFrequency;
+	}
+
+	public Map<Integer, List<Rank>> frequencyToRank() {
+		Map<Rank, Integer> rankToFrenquency = this.getRankFrequency();
+
+		Map<Integer, List<Rank>> frequencyRank = new TreeMap<Integer, List<Rank>>();
+
+		for (Entry<Rank, Integer> entry : rankToFrenquency.entrySet()) {
+
+			if (!frequencyRank.containsKey(entry.getValue())) {
+				ArrayList<Rank> rankList = new ArrayList<Rank>();
+				rankList.add(entry.getKey());
+				frequencyRank.put(entry.getValue(), rankList);
+			} else {
+				frequencyRank.get(entry.getValue()).add(entry.getKey());
+			}
+		}
+
+		return frequencyRank;
 	}
 
 	public boolean isStraight() {

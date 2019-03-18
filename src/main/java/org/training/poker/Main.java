@@ -1,12 +1,8 @@
 package org.training.poker;
-
+import java.util.*;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Hello world!
- *
- */
 public class Main 
 {
     public static void main( String[] args )
@@ -27,4 +23,8 @@ public class Main
         System.out.println(hand.getRankFrequency());
         System.out.println(hand.isStraight());
     }
+
+    
+  
+    
 }
